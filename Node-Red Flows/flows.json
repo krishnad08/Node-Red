@@ -1,0 +1,119 @@
+[
+    {
+        "id": "af7eef4c3f19e4da",
+        "type": "tab",
+        "label": "NCD",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a9a1575ed346c4dc",
+        "type": "ncd-gateway-node",
+        "z": "af7eef4c3f19e4da",
+        "name": "",
+        "connection": "a17c3d8658765468",
+        "unknown_devices": true,
+        "outputs": 2,
+        "x": 450,
+        "y": 500,
+        "wires": [
+            [
+                "6a94c23c4c68de65",
+                "fcbaa7562295df76"
+            ],
+            [
+                "4eff13c001220426"
+            ]
+        ]
+    },
+    {
+        "id": "6a94c23c4c68de65",
+        "type": "debug",
+        "z": "af7eef4c3f19e4da",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "4eff13c001220426",
+        "type": "debug",
+        "z": "af7eef4c3f19e4da",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "fcbaa7562295df76",
+        "type": "mqtt out",
+        "z": "af7eef4c3f19e4da",
+        "name": "",
+        "topic": "data/parsed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "19fd8cceaeec0b5e",
+        "x": 750,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "a17c3d8658765468",
+        "type": "ncd-gateway-config",
+        "name": "",
+        "comm_type": "serial",
+        "ip_address": "",
+        "tcp_port": "2101",
+        "port": "/dev/ttymxc2",
+        "baudRate": "115200",
+        "pan_id": "7FFF",
+        "rssi": true
+    },
+    {
+        "id": "19fd8cceaeec0b5e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

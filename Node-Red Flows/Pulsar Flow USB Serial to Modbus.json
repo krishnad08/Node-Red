@@ -1,0 +1,377 @@
+[
+    {
+        "id": "e345486a791dd897",
+        "type": "tab",
+        "label": "Pulsar Flow USB Serial to Modbus",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2b1e45d9238091c1",
+        "type": "modbus-getter",
+        "z": "e345486a791dd897",
+        "name": "Volume Total Gallons",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "2",
+        "dataType": "InputRegister",
+        "adr": "301",
+        "quantity": "2",
+        "server": "3e80d3b2f9c8b6c1",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 380,
+        "y": 140,
+        "wires": [
+            [
+                "e3d7af24855f1b61",
+                "b01ca4d2f6b96efb",
+                "512414ad78a4b4b0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "49bb4bfaf6ac541f",
+        "type": "inject",
+        "z": "e345486a791dd897",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "2b1e45d9238091c1"
+            ]
+        ]
+    },
+    {
+        "id": "e3d7af24855f1b61",
+        "type": "debug",
+        "z": "e345486a791dd897",
+        "name": "debug 98",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "24d62da3e8a13636",
+        "type": "modbus-getter",
+        "z": "e345486a791dd897",
+        "name": "USMG Vol Total",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "2",
+        "dataType": "InputRegister",
+        "adr": "309",
+        "quantity": "2",
+        "server": "3e80d3b2f9c8b6c1",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 560,
+        "y": 240,
+        "wires": [
+            [
+                "b8e3606892d63d0e",
+                "e3d7af24855f1b61",
+                "512414ad78a4b4b0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b01ca4d2f6b96efb",
+        "type": "delay",
+        "z": "e345486a791dd897",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 240,
+        "wires": [
+            [
+                "24d62da3e8a13636"
+            ]
+        ]
+    },
+    {
+        "id": "3165b2b77d3f8226",
+        "type": "modbus-getter",
+        "z": "e345486a791dd897",
+        "name": "Current Flow",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "2",
+        "dataType": "InputRegister",
+        "adr": "101",
+        "quantity": "2",
+        "server": "3e80d3b2f9c8b6c1",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 550,
+        "y": 300,
+        "wires": [
+            [
+                "e3d7af24855f1b61",
+                "d8daa5195d916a15",
+                "512414ad78a4b4b0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b8e3606892d63d0e",
+        "type": "delay",
+        "z": "e345486a791dd897",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 300,
+        "wires": [
+            [
+                "3165b2b77d3f8226"
+            ]
+        ]
+    },
+    {
+        "id": "d3d5db24b8015b9c",
+        "type": "modbus-getter",
+        "z": "e345486a791dd897",
+        "name": "Previous Day total USMG",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "2",
+        "dataType": "InputRegister",
+        "adr": "325",
+        "quantity": "2",
+        "server": "3e80d3b2f9c8b6c1",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 590,
+        "y": 380,
+        "wires": [
+            [
+                "e3d7af24855f1b61",
+                "512414ad78a4b4b0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d8daa5195d916a15",
+        "type": "delay",
+        "z": "e345486a791dd897",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "d3d5db24b8015b9c"
+            ]
+        ]
+    },
+    {
+        "id": "512414ad78a4b4b0",
+        "type": "join",
+        "z": "e345486a791dd897",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 830,
+        "y": 220,
+        "wires": [
+            [
+                "c36c44514e47b814",
+                "d04d2ff425bc0eae"
+            ]
+        ]
+    },
+    {
+        "id": "c36c44514e47b814",
+        "type": "debug",
+        "z": "e345486a791dd897",
+        "name": "debug 99",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d04d2ff425bc0eae",
+        "type": "mqtt out",
+        "z": "e345486a791dd897",
+        "name": "",
+        "topic": "pulsarDFM/parsed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "19fd8cceaeec0b5e",
+        "x": 1010,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "3e80d3b2f9c8b6c1",
+        "type": "modbus-client",
+        "name": "",
+        "clienttype": "serial",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB0",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "2",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "19fd8cceaeec0b5e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

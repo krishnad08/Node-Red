@@ -1,0 +1,162 @@
+[
+    {
+        "id": "f599fca4c899b812",
+        "type": "tab",
+        "label": "GPS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c56d709ef66a2da3",
+        "type": "exec",
+        "z": "f599fca4c899b812",
+        "command": "python3 getGPSData.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "10",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [],
+            [
+                "31527b8f7ed6245c"
+            ],
+            [
+                "2828e006c1307227"
+            ]
+        ]
+    },
+    {
+        "id": "82c32832e7803a30",
+        "type": "inject",
+        "z": "f599fca4c899b812",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "c56d709ef66a2da3"
+            ]
+        ]
+    },
+    {
+        "id": "2828e006c1307227",
+        "type": "file in",
+        "z": "f599fca4c899b812",
+        "name": "",
+        "filename": "/home/ncdio/gpsData/gps.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "6f062ef6cfe068c1"
+            ]
+        ]
+    },
+    {
+        "id": "31527b8f7ed6245c",
+        "type": "debug",
+        "z": "f599fca4c899b812",
+        "name": "debug 95",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "165020119b78c4ae",
+        "type": "mqtt out",
+        "z": "f599fca4c899b812",
+        "name": "",
+        "topic": "gps/parsed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "local-losant-mqtt",
+        "x": 1110,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "6f062ef6cfe068c1",
+        "type": "json",
+        "z": "f599fca4c899b812",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 870,
+        "y": 340,
+        "wires": [
+            [
+                "31527b8f7ed6245c",
+                "165020119b78c4ae"
+            ]
+        ]
+    },
+    {
+        "id": "local-losant-mqtt",
+        "type": "mqtt-broker",
+        "name": "Local Losant",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

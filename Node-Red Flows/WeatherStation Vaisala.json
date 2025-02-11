@@ -1,0 +1,434 @@
+[
+    {
+        "id": "cb30fe2682f01f90",
+        "type": "tab",
+        "label": "Flow 6",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "25adf260a14ad254",
+        "type": "inject",
+        "z": "cb30fe2682f01f90",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "21600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "11f253c383366f4d"
+            ]
+        ]
+    },
+    {
+        "id": "11f253c383366f4d",
+        "type": "exec",
+        "z": "cb30fe2682f01f90",
+        "command": "python3 serialPortFinder_FTDI.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 420,
+        "y": 80,
+        "wires": [
+            [
+                "f58f7f2a0068406f"
+            ],
+            [
+                "f58f7f2a0068406f"
+            ],
+            [
+                "f58f7f2a0068406f"
+            ]
+        ]
+    },
+    {
+        "id": "f58f7f2a0068406f",
+        "type": "debug",
+        "z": "cb30fe2682f01f90",
+        "name": "debug 154",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "93341bbbf019ef68",
+        "type": "inject",
+        "z": "cb30fe2682f01f90",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 200,
+        "wires": [
+            [
+                "35ad7fcd4d8c5d11",
+                "6a5cc9128275f1e8"
+            ]
+        ]
+    },
+    {
+        "id": "c2ed9cb3623a2e98",
+        "type": "exec",
+        "z": "cb30fe2682f01f90",
+        "command": "python3 getVaisalaWeatherData_Holding_V2.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 680,
+        "y": 200,
+        "wires": [
+            [
+                "deb5778ddce84ead",
+                "10ef36bfbef53a9c"
+            ],
+            [
+                "deb5778ddce84ead"
+            ],
+            [
+                "deb5778ddce84ead"
+            ]
+        ]
+    },
+    {
+        "id": "deb5778ddce84ead",
+        "type": "debug",
+        "z": "cb30fe2682f01f90",
+        "name": "debug 155",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "2efc495fe41a7524",
+        "type": "file in",
+        "z": "cb30fe2682f01f90",
+        "name": "",
+        "filename": "/home/ncdio/weather/weather_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1140,
+        "y": 300,
+        "wires": [
+            [
+                "deb5778ddce84ead",
+                "1cf3294ff587500a",
+                "fa685b5ad91ddf58"
+            ]
+        ]
+    },
+    {
+        "id": "fa685b5ad91ddf58",
+        "type": "mqtt out",
+        "z": "cb30fe2682f01f90",
+        "name": "",
+        "topic": "vaisalaWeather/parsed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "local-losant-mqtt",
+        "x": 1460,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "10ef36bfbef53a9c",
+        "type": "delay",
+        "z": "cb30fe2682f01f90",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 780,
+        "y": 300,
+        "wires": [
+            [
+                "2efc495fe41a7524"
+            ]
+        ]
+    },
+    {
+        "id": "1cf3294ff587500a",
+        "type": "delay",
+        "z": "cb30fe2682f01f90",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 780,
+        "y": 360,
+        "wires": [
+            [
+                "ae8b4c138fdd26a9"
+            ]
+        ]
+    },
+    {
+        "id": "ae8b4c138fdd26a9",
+        "type": "exec",
+        "z": "cb30fe2682f01f90",
+        "command": "rm /home/ncdio/weather/weather_data.json",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 1050,
+        "y": 360,
+        "wires": [
+            [
+                "3e104be8bad570d8"
+            ],
+            [
+                "3e104be8bad570d8"
+            ],
+            [
+                "3e104be8bad570d8"
+            ]
+        ]
+    },
+    {
+        "id": "3e104be8bad570d8",
+        "type": "debug",
+        "z": "cb30fe2682f01f90",
+        "name": "debug 156",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1330,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6c34354f015d2106",
+        "type": "exec",
+        "z": "cb30fe2682f01f90",
+        "command": "python3 resetRainFall.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 610,
+        "y": 460,
+        "wires": [
+            [
+                "d9663c26635306b4"
+            ],
+            [
+                "d9663c26635306b4"
+            ],
+            [
+                "d9663c26635306b4"
+            ]
+        ]
+    },
+    {
+        "id": "d9663c26635306b4",
+        "type": "debug",
+        "z": "cb30fe2682f01f90",
+        "name": "debug 157",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8183d8ac.01c1e",
+        "type": "rbe",
+        "z": "cb30fe2682f01f90",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "4703650f0339960e",
+                "6c34354f015d2106"
+            ]
+        ]
+    },
+    {
+        "id": "4703650f0339960e",
+        "type": "debug",
+        "z": "cb30fe2682f01f90",
+        "name": "debug 158",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "6a5cc9128275f1e8",
+        "type": "function",
+        "z": "cb30fe2682f01f90",
+        "name": "Get Hour",
+        "func": "// Get the timestamp from the message payload (milliseconds)\nlet timestamp_ms = msg.payload;\n\n// Convert to seconds\nlet timestamp_s = timestamp_ms / 1000;\n\n// Convert to Date object\nlet date = new Date(timestamp_s * 1000);  // Convert to JavaScript Date object\n\n// Extract the hour\nlet hour = date.getUTCHours();  // Use getHours() for local time\n\n// Set the output payload\nmsg.payload = hour;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 300,
+        "wires": [
+            [
+                "8183d8ac.01c1e",
+                "4703650f0339960e"
+            ]
+        ]
+    },
+    {
+        "id": "35ad7fcd4d8c5d11",
+        "type": "function",
+        "z": "cb30fe2682f01f90",
+        "name": "10 min Filter on 2 Minute Mark",
+        "func": "// Get the timestamp from the message payload (milliseconds)\nlet timestamp_ms = msg.payload;\n\n// Convert to seconds\nlet timestamp_s = timestamp_ms / 1000;\n\n// Convert to Date object\nlet date = new Date(timestamp_s * 1000);  // Convert to JavaScript Date object\n\n// Extract the minutes\nlet minutes = date.getUTCMinutes();  // Use getMinutes() for local time\n\n// Define allowed minute marks\nlet allowedMinutes = [2, 12, 22, 32, 42, 52];\n\n// Check if the current minute is in the allowed list\nif (allowedMinutes.includes(minutes)) {\n    msg.payload = minutes;  // Send the message only if it matches\n    return msg;\n} else {\n    return null;  // Stop processing if the minute is not in the list\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "c2ed9cb3623a2e98"
+            ]
+        ]
+    },
+    {
+        "id": "local-losant-mqtt",
+        "type": "mqtt-broker",
+        "name": "Local Losant",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

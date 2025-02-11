@@ -1,0 +1,276 @@
+[
+    {
+        "id": "fcd949b6c9825a3d",
+        "type": "tab",
+        "label": "H2S Sensor Acrulog",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4919af7241c74b5f",
+        "type": "debug",
+        "z": "fcd949b6c9825a3d",
+        "name": "debug 104",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "79edc7d9018e5ddb",
+        "type": "modbus-response",
+        "z": "fcd949b6c9825a3d",
+        "name": "",
+        "registerShowMax": 20,
+        "x": 1050,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e5259b358521a534",
+        "type": "mqtt out",
+        "z": "fcd949b6c9825a3d",
+        "name": "",
+        "topic": "modbusAscii/parsed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "local-losant-mqtt",
+        "x": 1060,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ce4f4843e6d08731",
+        "type": "modbus-getter",
+        "z": "fcd949b6c9825a3d",
+        "name": "H2S Sensor",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "10",
+        "dataType": "InputRegister",
+        "adr": "0",
+        "quantity": "12",
+        "server": "b67c3ebb7542059e",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": true,
+        "keepMsgProperties": true,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 610,
+        "y": 340,
+        "wires": [
+            [
+                "79edc7d9018e5ddb",
+                "7b9bda1f88d54e5f",
+                "132ecba70973cce6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0974c8edcd7d9201",
+        "type": "inject",
+        "z": "fcd949b6c9825a3d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 340,
+        "wires": [
+            [
+                "ce4f4843e6d08731"
+            ]
+        ]
+    },
+    {
+        "id": "7b9bda1f88d54e5f",
+        "type": "switch",
+        "z": "fcd949b6c9825a3d",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "istype",
+                "v": "array",
+                "vt": "array"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 850,
+        "y": 320,
+        "wires": [
+            [
+                "4919af7241c74b5f",
+                "e5259b358521a534",
+                "384fc1eaac4499b7"
+            ]
+        ]
+    },
+    {
+        "id": "ba3581f68d1620e2",
+        "type": "trigger",
+        "z": "fcd949b6c9825a3d",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "-10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 390,
+        "y": 400,
+        "wires": [
+            [
+                "ce4f4843e6d08731"
+            ]
+        ]
+    },
+    {
+        "id": "384fc1eaac4499b7",
+        "type": "change",
+        "z": "fcd949b6c9825a3d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 960,
+        "y": 460,
+        "wires": [
+            [
+                "ba3581f68d1620e2"
+            ]
+        ]
+    },
+    {
+        "id": "132ecba70973cce6",
+        "type": "switch",
+        "z": "fcd949b6c9825a3d",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "istype",
+                "v": "string",
+                "vt": "string"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 730,
+        "y": 500,
+        "wires": [
+            [
+                "ba3581f68d1620e2"
+            ]
+        ]
+    },
+    {
+        "id": "local-losant-mqtt",
+        "type": "mqtt-broker",
+        "name": "Local Losant",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b67c3ebb7542059e",
+        "type": "modbus-client",
+        "name": "localhost server",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "localhost",
+        "tcpPort": "8082",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "0",
+        "commandDelay": "10",
+        "clientTimeout": "10000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    }
+]

@@ -1,0 +1,1527 @@
+[
+    {
+        "id": "b4f7549c6815a4e4",
+        "type": "tab",
+        "label": "Rework - Docker Restart",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7687729b233211bc",
+        "type": "group",
+        "z": "b4f7549c6815a4e4",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "4ff437af199ea2f5",
+            "ddd6852184a6e26c",
+            "37ae4a1ab81272cf",
+            "70947a86406832f6"
+        ],
+        "x": 14,
+        "y": 659,
+        "w": 472,
+        "h": 182
+    },
+    {
+        "id": "0ad00b15aff72aad",
+        "type": "group",
+        "z": "b4f7549c6815a4e4",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "29901c0155dcf30e",
+            "653bf8434c34325d",
+            "a8545bc91f008d3d",
+            "66d56cec3ae185d4"
+        ],
+        "x": 14,
+        "y": 899,
+        "w": 492,
+        "h": 142
+    },
+    {
+        "id": "fee3b1acda9b46e6",
+        "type": "switch",
+        "z": "b4f7549c6815a4e4",
+        "name": "Check if not connected",
+        "property": "status.text",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "node-red:common.status.disconnected",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "node-red:common.status.connecting",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "node-red:common.status.connected",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 510,
+        "y": 320,
+        "wires": [
+            [
+                "bc9ae951d8d1e967"
+            ],
+            [
+                "1cec22c1d21b451c"
+            ],
+            [
+                "f3c5462c18742215"
+            ]
+        ]
+    },
+    {
+        "id": "bc9ae951d8d1e967",
+        "type": "delay",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "120",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 300,
+        "wires": [
+            [
+                "a22d4288cee0d2e4",
+                "0eac6a8cb5e3ee2b"
+            ]
+        ]
+    },
+    {
+        "id": "96488b83bdab5950",
+        "type": "rbe",
+        "z": "b4f7549c6815a4e4",
+        "name": "filter",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "status.text",
+        "topi": "topic",
+        "x": 310,
+        "y": 320,
+        "wires": [
+            [
+                "fee3b1acda9b46e6"
+            ]
+        ]
+    },
+    {
+        "id": "e1d17066c666a119",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "Not",
+        "props": [
+            {
+                "p": "status.text",
+                "v": "node-red:common.status.disconnected",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "96488b83bdab5950"
+            ]
+        ]
+    },
+    {
+        "id": "c48b321bfdee06cb",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "Connected",
+        "props": [
+            {
+                "p": "status.text",
+                "v": "node-red:common.status.connected",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "96488b83bdab5950"
+            ]
+        ]
+    },
+    {
+        "id": "f3c5462c18742215",
+        "type": "change",
+        "z": "b4f7549c6815a4e4",
+        "name": "Reset Timer",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 380,
+        "wires": [
+            [
+                "bc9ae951d8d1e967",
+                "1cec22c1d21b451c"
+            ]
+        ]
+    },
+    {
+        "id": "a22d4288cee0d2e4",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "172f8930b9795a5b",
+        "type": "link in",
+        "z": "b4f7549c6815a4e4",
+        "name": "link in 1",
+        "links": [
+            "5dc10eaf1ebdf645",
+            "37ae4a1ab81272cf"
+        ],
+        "x": 165,
+        "y": 260,
+        "wires": [
+            [
+                "96488b83bdab5950",
+                "fd533106d06cbb06"
+            ]
+        ]
+    },
+    {
+        "id": "63f5235c5083b7ec",
+        "type": "tcp out",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "host": "localhost",
+        "port": "8888",
+        "beserver": "client",
+        "base64": false,
+        "end": false,
+        "tls": "",
+        "x": 2290,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5e60e57b376f4f0e",
+        "type": "change",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "out",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1840,
+        "y": 280,
+        "wires": [
+            [
+                "c15d55f05f15f286"
+            ]
+        ]
+    },
+    {
+        "id": "afef587031e22128",
+        "type": "function",
+        "z": "b4f7549c6815a4e4",
+        "name": "Handle Logging & Increment - No 12 hours wait",
+        "func": "\nlet docker_restarts = global.get('masen_restart_monitor');\nnode.warn(docker_restarts);\nlet date = new Date();\n// If docker_restarts has more than three records remove the first one\n// A restart requirement would have been caught when the previous was added\nif(docker_restarts.length > 2){\n    docker_restarts.shift();\n}\ndocker_restarts.push(date.getTime()); \n\n// Check for three alements and first element is less than two hours ago\nif (docker_restarts.length >= 3 && docker_restarts[2] - docker_restarts[0] < 7200000){\n    msg.payload = date.getTime() + \" - Rebooting Gateway\";\n    msg.out = \"reboot\";\n}else{\n    msg.payload = date.getTime() + \" - Restarting Docker\";\n    msg.out = \"restart_docker\";\n}\nglobal.set('masen_restart_monitor', docker_restarts);\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a3ef24207e772f7",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 820,
+        "y": 260,
+        "wires": [
+            [
+                "0eac6a8cb5e3ee2b"
+            ]
+        ]
+    },
+    {
+        "id": "d3fbb0ac449399e0",
+        "type": "file",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/docker_watchdog.log",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1700,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b34dd6be33c8485e",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "0a91124e9baed42f"
+            ]
+        ]
+    },
+    {
+        "id": "0a91124e9baed42f",
+        "type": "change",
+        "z": "b4f7549c6815a4e4",
+        "name": "Init masen_restart_monitor",
+        "rules": [
+            {
+                "t": "set",
+                "p": "masen_restart_monitor",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c2f9fd7200d15ec6",
+        "type": "comment",
+        "z": "b4f7549c6815a4e4",
+        "name": "Initialize Docker Restarts variable",
+        "info": "",
+        "x": 250,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "8909488c05a70006",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "Init",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "4b46982e3fe7d17b"
+            ]
+        ]
+    },
+    {
+        "id": "4b46982e3fe7d17b",
+        "type": "file",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "de3f25822a4bf351"
+            ]
+        ]
+    },
+    {
+        "id": "c0981524d2a26f40",
+        "type": "file in",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 360,
+        "y": 140,
+        "wires": [
+            [
+                "de3f25822a4bf351"
+            ]
+        ]
+    },
+    {
+        "id": "951d5e8f10b7c069",
+        "type": "file",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "delete",
+        "encoding": "none",
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "de3f25822a4bf351"
+            ]
+        ]
+    },
+    {
+        "id": "137820ed9d142593",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "Read",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "c0981524d2a26f40"
+            ]
+        ]
+    },
+    {
+        "id": "77be24d04c32cecc",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "Delete",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "951d5e8f10b7c069"
+            ]
+        ]
+    },
+    {
+        "id": "de3f25822a4bf351",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 148",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "0eac6a8cb5e3ee2b",
+        "type": "file in",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1060,
+        "y": 280,
+        "wires": [
+            [
+                "47529364f4420122",
+                "1e59873a694dcf15"
+            ]
+        ]
+    },
+    {
+        "id": "47529364f4420122",
+        "type": "function",
+        "z": "b4f7549c6815a4e4",
+        "name": "Handle Logging & Increment",
+        "func": "let date = new Date();\nlet time_now = date.getTime();\nlet docker_restarts = global.get('masen_restart_monitor');\n// If never been rebooted or 12 hours have passed since last reboot\nif (msg.payload == \"\" || parseInt(msg.payload) < (time_now - 43200000)){\n    if(Object.hasOwn(msg, 'bypass')){\n        msg.payload = time_now + \" - Rebooting Gateway bypassed docker restart - HTTP\";\n        msg.out = \"reboot\";\n        return msg;\n    }\n    node.warn(docker_restarts);\n    // If docker_restarts has more than three records remove the first one\n    // A restart requirement would have been caught when the previous was added\n   // if (docker_restarts.length > 1) {\n    if (docker_restarts.length > 2) {\n        docker_restarts.shift();\n    }\n    docker_restarts.push(time_now);\n\n    // Check for three alements and first element is less than two hours ago\n   // if (docker_restarts.length >= 2 && docker_restarts[1] - docker_restarts[0] < 900000) {\n   if (docker_restarts.length >= 3 && docker_restarts[2] - docker_restarts[0] < 7200000) {\n        msg.payload = time_now + \" - Rebooting Gateway\";\n        msg.out = \"reboot\";\n    } else {\n        msg.payload = time_now + \" - Restarting Docker\";\n        msg.out = \"restart_docker\";\n    }\n    global.set('masen_restart_monitor', docker_restarts);\n    return msg;\n}else{\n    msg.payload = time_now + \" - 12 hour ignore period\";\n    return msg;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 280,
+        "wires": [
+            [
+                "d3fbb0ac449399e0",
+                "3c81b9a564c2362d",
+                "f988e6214e7269ef"
+            ]
+        ]
+    },
+    {
+        "id": "6592667b1b08d017",
+        "type": "change",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1840,
+        "y": 200,
+        "wires": [
+            [
+                "03d55c28a166a6b4"
+            ]
+        ]
+    },
+    {
+        "id": "03d55c28a166a6b4",
+        "type": "file",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 2100,
+        "y": 200,
+        "wires": [
+            [
+                "b48ee88cb6de5b2f"
+            ]
+        ]
+    },
+    {
+        "id": "1e59873a694dcf15",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 150",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ddd6a22ee761e158",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "Reset",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "f72f0529ceedf917"
+            ]
+        ]
+    },
+    {
+        "id": "f72f0529ceedf917",
+        "type": "file",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "de3f25822a4bf351"
+            ]
+        ]
+    },
+    {
+        "id": "c15d55f05f15f286",
+        "type": "delay",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 2040,
+        "y": 280,
+        "wires": [
+            [
+                "63f5235c5083b7ec"
+            ]
+        ]
+    },
+    {
+        "id": "b48ee88cb6de5b2f",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 152",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2390,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3c81b9a564c2362d",
+        "type": "switch",
+        "z": "b4f7549c6815a4e4",
+        "name": "Check for Ignore",
+        "property": "out",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "reboot",
+                "vt": "str"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1610,
+        "y": 240,
+        "wires": [
+            [
+                "6592667b1b08d017",
+                "5e60e57b376f4f0e",
+                "077501289de5edd2"
+            ],
+            [
+                "5e60e57b376f4f0e",
+                "077501289de5edd2"
+            ]
+        ]
+    },
+    {
+        "id": "f988e6214e7269ef",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 126",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1630,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "077501289de5edd2",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 153",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1830,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4ff437af199ea2f5",
+        "type": "mqtt out",
+        "z": "b4f7549c6815a4e4",
+        "g": "7687729b233211bc",
+        "name": "",
+        "topic": "data/parsed",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "19fd8cceaeec0b5e",
+        "x": 310,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "ddd6852184a6e26c",
+        "type": "status",
+        "z": "b4f7549c6815a4e4",
+        "g": "7687729b233211bc",
+        "name": "",
+        "scope": [
+            "4ff437af199ea2f5"
+        ],
+        "x": 100,
+        "y": 800,
+        "wires": [
+            [
+                "37ae4a1ab81272cf"
+            ]
+        ]
+    },
+    {
+        "id": "37ae4a1ab81272cf",
+        "type": "link out",
+        "z": "b4f7549c6815a4e4",
+        "g": "7687729b233211bc",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "172f8930b9795a5b"
+        ],
+        "x": 285,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "70947a86406832f6",
+        "type": "comment",
+        "z": "b4f7549c6815a4e4",
+        "g": "7687729b233211bc",
+        "name": "Test nodes, replace with link out from flow with MQTT Node",
+        "info": "",
+        "x": 250,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "fd533106d06cbb06",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 154",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "29901c0155dcf30e",
+        "type": "mqtt out",
+        "z": "b4f7549c6815a4e4",
+        "d": true,
+        "g": "0ad00b15aff72aad",
+        "name": "",
+        "topic": "status",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0e23cdf764c84996",
+        "x": 390,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "e9ab3df9cc6c7e19",
+        "type": "exec",
+        "z": "b4f7549c6815a4e4",
+        "command": "pm2 restart all",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 300,
+        "y": 500,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c8512a46ef00256c",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 500,
+        "wires": [
+            [
+                "e9ab3df9cc6c7e19"
+            ]
+        ]
+    },
+    {
+        "id": "653bf8434c34325d",
+        "type": "link out",
+        "z": "b4f7549c6815a4e4",
+        "g": "0ad00b15aff72aad",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "deaaa9529ab036cf"
+        ],
+        "x": 235,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "a8545bc91f008d3d",
+        "type": "status",
+        "z": "b4f7549c6815a4e4",
+        "d": true,
+        "g": "0ad00b15aff72aad",
+        "name": "",
+        "scope": [
+            "29901c0155dcf30e"
+        ],
+        "x": 100,
+        "y": 1000,
+        "wires": [
+            [
+                "653bf8434c34325d"
+            ]
+        ]
+    },
+    {
+        "id": "66d56cec3ae185d4",
+        "type": "comment",
+        "z": "b4f7549c6815a4e4",
+        "g": "0ad00b15aff72aad",
+        "name": "Stand-in for Gateway connectivity check to Losant",
+        "info": "",
+        "x": 290,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "deaaa9529ab036cf",
+        "type": "link in",
+        "z": "b4f7549c6815a4e4",
+        "name": "link in 2",
+        "links": [
+            "653bf8434c34325d"
+        ],
+        "x": 165,
+        "y": 420,
+        "wires": [
+            [
+                "b97efb6453f78fb8"
+            ]
+        ]
+    },
+    {
+        "id": "b97efb6453f78fb8",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 155",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "94bba667bc1c3075",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "900",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 450,
+        "y": 580,
+        "wires": [
+            [
+                "55668c52f1341022"
+            ]
+        ]
+    },
+    {
+        "id": "55668c52f1341022",
+        "type": "http request",
+        "z": "b4f7549c6815a4e4",
+        "d": true,
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "google.com",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 650,
+        "y": 580,
+        "wires": [
+            [
+                "e34795801b52f34c",
+                "a6b54e231a5408f7"
+            ]
+        ]
+    },
+    {
+        "id": "e34795801b52f34c",
+        "type": "debug",
+        "z": "b4f7549c6815a4e4",
+        "name": "debug 156",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "a6b54e231a5408f7",
+        "type": "switch",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1110,
+        "y": 600,
+        "wires": [
+            [
+                "f5ce36119b6eaab3"
+            ],
+            [
+                "0c90d812a5036418"
+            ]
+        ]
+    },
+    {
+        "id": "f5ce36119b6eaab3",
+        "type": "link out",
+        "z": "b4f7549c6815a4e4",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "bd1db6c981e48baa"
+        ],
+        "x": 1235,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "0c90d812a5036418",
+        "type": "link out",
+        "z": "b4f7549c6815a4e4",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "79d41d8c14e24542"
+        ],
+        "x": 1245,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "79d41d8c14e24542",
+        "type": "link in",
+        "z": "b4f7549c6815a4e4",
+        "name": "link in 3",
+        "links": [
+            "0c90d812a5036418"
+        ],
+        "x": 625,
+        "y": 420,
+        "wires": [
+            [
+                "40e93dd5fad2fbd1"
+            ]
+        ]
+    },
+    {
+        "id": "bd1db6c981e48baa",
+        "type": "link in",
+        "z": "b4f7549c6815a4e4",
+        "name": "link in 4",
+        "links": [
+            "f5ce36119b6eaab3"
+        ],
+        "x": 585,
+        "y": 500,
+        "wires": [
+            [
+                "3469b3aa02930cfb"
+            ]
+        ]
+    },
+    {
+        "id": "40e93dd5fad2fbd1",
+        "type": "delay",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "60",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 860,
+        "y": 420,
+        "wires": [
+            [
+                "a22d4288cee0d2e4",
+                "b29e60bc53d7dee7"
+            ]
+        ]
+    },
+    {
+        "id": "3469b3aa02930cfb",
+        "type": "change",
+        "z": "b4f7549c6815a4e4",
+        "name": "Reset Timer",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 500,
+        "wires": [
+            [
+                "40e93dd5fad2fbd1"
+            ]
+        ]
+    },
+    {
+        "id": "b29e60bc53d7dee7",
+        "type": "file in",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1080,
+        "y": 420,
+        "wires": [
+            [
+                "56d3d182a3d1561b"
+            ]
+        ]
+    },
+    {
+        "id": "56d3d182a3d1561b",
+        "type": "change",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "bypass",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1300,
+        "y": 420,
+        "wires": [
+            [
+                "47529364f4420122"
+            ]
+        ]
+    },
+    {
+        "id": "29f436032fb406ad",
+        "type": "switch",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1110,
+        "y": 640,
+        "wires": [
+            [
+                "0c90d812a5036418"
+            ],
+            [
+                "f5ce36119b6eaab3"
+            ]
+        ]
+    },
+    {
+        "id": "1cec22c1d21b451c",
+        "type": "delay",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "12.1",
+        "timeoutUnits": "hours",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 340,
+        "wires": [
+            [
+                "0eac6a8cb5e3ee2b",
+                "a22d4288cee0d2e4"
+            ]
+        ]
+    },
+    {
+        "id": "7738dcf1bd6cf327",
+        "type": "inject",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1732008638",
+        "payloadType": "num",
+        "x": 630,
+        "y": 60,
+        "wires": [
+            [
+                "f2f331508c9bd83e"
+            ]
+        ]
+    },
+    {
+        "id": "f2f331508c9bd83e",
+        "type": "file",
+        "z": "b4f7549c6815a4e4",
+        "name": "",
+        "filename": "/home/ncdio/last_restart.log",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 860,
+        "y": 60,
+        "wires": [
+            [
+                "de3f25822a4bf351"
+            ]
+        ]
+    },
+    {
+        "id": "fdec1ded2f675210",
+        "type": "ping",
+        "z": "b4f7549c6815a4e4",
+        "protocol": "Automatic",
+        "mode": "timed",
+        "name": "",
+        "host": "broker.losant.com",
+        "timer": "300",
+        "inputs": 0,
+        "x": 690,
+        "y": 640,
+        "wires": [
+            [
+                "e34795801b52f34c",
+                "29f436032fb406ad"
+            ]
+        ]
+    },
+    {
+        "id": "19fd8cceaeec0b5e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "0e23cdf764c84996",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.losant.com",
+        "port": "1883",
+        "clientid": "65663c8b6c47200ba20f8a45",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

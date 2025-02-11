@@ -1,0 +1,480 @@
+[
+    {
+        "id": "45c1deb2a7fca26c",
+        "type": "tab",
+        "label": "Insitu Aquatroll ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "775eb937785d752f",
+        "type": "inject",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "0f5b980b9ce2ff14"
+            ]
+        ]
+    },
+    {
+        "id": "e31521083052e5da",
+        "type": "debug",
+        "z": "45c1deb2a7fca26c",
+        "name": "debug 146",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e82adbd5086adb27",
+        "type": "file in",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "filename": "/home/ncdio/aquatroll600/modbus_data_part_1.bin",
+        "filenameType": "str",
+        "format": "stream",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 590,
+        "y": 500,
+        "wires": [
+            [
+                "7188003c297f3dfa",
+                "416b5ddd41a9e6c3"
+            ]
+        ]
+    },
+    {
+        "id": "0f5b980b9ce2ff14",
+        "type": "exec",
+        "z": "45c1deb2a7fca26c",
+        "command": "python3 aquatroll600ReadData.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 240,
+        "y": 380,
+        "wires": [
+            [
+                "69356bfe2feeaba3",
+                "e31521083052e5da",
+                "1974523313e9b029"
+            ],
+            [
+                "e31521083052e5da"
+            ],
+            [
+                "e31521083052e5da"
+            ]
+        ]
+    },
+    {
+        "id": "69356bfe2feeaba3",
+        "type": "delay",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 400,
+        "y": 440,
+        "wires": [
+            [
+                "e82adbd5086adb27"
+            ]
+        ]
+    },
+    {
+        "id": "416b5ddd41a9e6c3",
+        "type": "exec",
+        "z": "45c1deb2a7fca26c",
+        "command": "rm /home/ncdio/aquatroll600/modbus_data_part_1.bin",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 740,
+        "y": 400,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "322302dd269158dd",
+        "type": "mqtt out",
+        "z": "45c1deb2a7fca26c",
+        "d": true,
+        "name": "",
+        "topic": "aquatroll600/parsed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "local-losant-mqtt",
+        "x": 1340,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "7188003c297f3dfa",
+        "type": "function",
+        "z": "45c1deb2a7fca26c",
+        "name": "function 1",
+        "func": "let byteArray = Array.from(msg.payload);\n\nmsg.payload = { \"data\": byteArray };\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 500,
+        "wires": [
+            [
+                "81bf123eb2519961"
+            ]
+        ]
+    },
+    {
+        "id": "81bf123eb2519961",
+        "type": "change",
+        "z": "45c1deb2a7fca26c",
+        "name": "Target Gateway",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.address",
+                "pt": "msg",
+                "to": "00:13:a2:00:42:32:ab:c9",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1220,
+        "y": 560,
+        "wires": [
+            [
+                "b7ebb15f79cd2bdb",
+                "86f3b9ebf76cafcb"
+            ]
+        ]
+    },
+    {
+        "id": "86f3b9ebf76cafcb",
+        "type": "ncd-gateway-node",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "connection": "9ab72072e5931ea9",
+        "unknown_devices": true,
+        "outputs": 2,
+        "x": 1450,
+        "y": 560,
+        "wires": [
+            [
+                "37cd6351345a0b4b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b7ebb15f79cd2bdb",
+        "type": "debug",
+        "z": "45c1deb2a7fca26c",
+        "name": "debug 149",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "37cd6351345a0b4b",
+        "type": "debug",
+        "z": "45c1deb2a7fca26c",
+        "name": "debug 150",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1650,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "0111a2cef5dbc95f",
+        "type": "mqtt out",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "topic": "aquatroll600/parsed",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "local-losant-mqtt",
+        "x": 1140,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "57c9fbba76309c33",
+        "type": "file in",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "filename": "/home/ncdio/aquatroll600/modbus_data_part_2.bin",
+        "filenameType": "str",
+        "format": "stream",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 530,
+        "y": 620,
+        "wires": [
+            [
+                "fe7b558abc798878",
+                "7222fdbcde6ca924"
+            ]
+        ]
+    },
+    {
+        "id": "1974523313e9b029",
+        "type": "delay",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "57c9fbba76309c33"
+            ]
+        ]
+    },
+    {
+        "id": "fe7b558abc798878",
+        "type": "function",
+        "z": "45c1deb2a7fca26c",
+        "name": "function 12",
+        "func": "let byteArray = Array.from(msg.payload);\n\nmsg.payload = { \"data\": byteArray };\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 620,
+        "wires": [
+            [
+                "81bf123eb2519961"
+            ]
+        ]
+    },
+    {
+        "id": "7222fdbcde6ca924",
+        "type": "exec",
+        "z": "45c1deb2a7fca26c",
+        "command": "rm /home/ncdio/aquatroll600/modbus_data_part_2.bin",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 620,
+        "y": 700,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6679c2adcac863ec",
+        "type": "inject",
+        "z": "45c1deb2a7fca26c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "86400",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 140,
+        "wires": [
+            [
+                "56403ccc46d067c7"
+            ]
+        ]
+    },
+    {
+        "id": "93b8a4d7e71c35a7",
+        "type": "debug",
+        "z": "45c1deb2a7fca26c",
+        "name": "debug 152",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "56403ccc46d067c7",
+        "type": "exec",
+        "z": "45c1deb2a7fca26c",
+        "command": "python3 serialPortFinder_FTDI.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "93b8a4d7e71c35a7"
+            ],
+            [
+                "93b8a4d7e71c35a7"
+            ],
+            [
+                "93b8a4d7e71c35a7"
+            ]
+        ]
+    },
+    {
+        "id": "local-losant-mqtt",
+        "type": "mqtt-broker",
+        "name": "Local Losant",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9ab72072e5931ea9",
+        "type": "ncd-gateway-config",
+        "name": "",
+        "comm_type": "serial",
+        "ip_address": "",
+        "tcp_port": "2101",
+        "port": "/dev/ttymxc2",
+        "baudRate": "115200",
+        "pan_id": "7FFF",
+        "rssi": true
+    }
+]
